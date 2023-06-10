@@ -95,9 +95,9 @@ class PluginsPanel(Screen):
         config_rds.close()
         self.list = self.list_new
 
-        if config.plugins.PluginsPanel.hits.value:
-            self.list.sort(key=lambda x: int(x[4]))
-            self.list.reverse()
+        # if config.plugins.PluginsPanel.hits.value:
+            # self.list.sort(key=lambda x: int(x[4]))
+            # self.list.reverse()
         print('[wall-e]: Plugin count:', len(self.list))
 
         self.posi = []
@@ -154,8 +154,8 @@ class PluginsPanel(Screen):
                 self['zeile' + str(x)].hide()
 
         self.achsex = 0
-        if config.plugins.PluginsPanel.hits.value:
-            print('YEEES')
+        # if config.plugins.PluginsPanel.hits.value:
+            # print('YEEES')
         self.onFirstExecBegin.append(self._onFirstExecBegin)
 
     def wall_sort(self):
@@ -168,7 +168,7 @@ class PluginsPanel(Screen):
 
     def closen(self, data):
         print('data: ', data)
-        print(config.plugins.PluginsPanel.hits.value)
+        # print(config.plugins.PluginsPanel.hits.value)
         self.close(self.session, 'main')
 
     def paintnew(self, a, b):
@@ -249,12 +249,12 @@ class PluginsPanel_config(Screen, ConfigListScreen):
 
     skin = """
             <screen position="center,center" size="633,484" title="Wall Setup">
-                <widget name="config" position="20,20" size="595,50" scrollbarMode="showNever" itemHeight="50" />
                 <widget name="config2" position="20,100" size="595,320" scrollbarMode="showOnDemand" />
                 <!--
+                <widget name="config" position="20,20" size="595,50" scrollbarMode="showNever" itemHeight="50" />                
                 <ePixmap position="30,440" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" />
                 <widget name="key_green" position="60,430" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;19" foregroundColor="yellow" transparent="1" />
-                --->
+                -->
             </screen>"""
 
     def __init__(self, session, plugin_path):
