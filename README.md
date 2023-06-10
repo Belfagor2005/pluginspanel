@@ -5,8 +5,8 @@ PluginsPanel Mod by Lululla
 <img src="https://github.com/Belfagor2005/pluginspanel/blob/main/usr/lib/enigma2/python/Plugins/Extensions/PluginsPanel/images/pluginHD.png">
 
 
-<img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/1.png?raw=true">
-<img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/2.png?raw=true">
+<img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/1.jpg?raw=true">
+<img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/2.jpg?raw=true">
 
 Enigma2 project
 
