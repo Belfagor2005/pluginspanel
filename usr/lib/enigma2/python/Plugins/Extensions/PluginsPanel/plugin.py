@@ -99,7 +99,7 @@ class PluginsPanel(Screen):
             self.list.sort(key=lambda x: int(x[4]))
             self.list.reverse()
         print('[wall-e]: Plugin count:', len(self.list))
-        
+
         self.posi = []
         skincontent = ''
 
@@ -132,7 +132,8 @@ class PluginsPanel(Screen):
                                      'ColorActions',
                                      'DirectionActions'], {'cancel': self.exit,
                                                                 'ok': self.ok,
-                                                                'green': self.wall_config,
+                                                                'green': self.wall_sort,
+                                                                'blue': self.wall_config,
                                                                 'left': self.left,
                                                                 'right': self.right,
                                                                 'up': self.up,
@@ -140,7 +141,7 @@ class PluginsPanel(Screen):
         self['frame'] = MovingPixmap()
         self['info'] = Label('')
         self['disc'] = Label('')
-        self['key_green'] = Label('Setup')
+        self['key_green'] = Label('Sort')
         for x in range(len(self.list)):
             self.at = 29
             if isFHD():
@@ -156,6 +157,11 @@ class PluginsPanel(Screen):
         if config.plugins.PluginsPanel.hits.value:
             print('YEEES')
         self.onFirstExecBegin.append(self._onFirstExecBegin)
+
+    def wall_sort(self):
+        self.list.sort(key=lambda x: int(x[4]))
+        self.list.reverse()
+        self._onFirstExecBegin()
 
     def wall_config(self):
         self.session.openWithCallback(self.closen, PluginsPanel_config, plugin_path)
@@ -240,13 +246,15 @@ class PluginsPanel(Screen):
 
 
 class PluginsPanel_config(Screen, ConfigListScreen):
-    
+
     skin = """
             <screen position="center,center" size="633,484" title="Wall Setup">
-                <widget name="config" position="20,20" size="595,50" scrollbarMode="showOnDemand" />
+                <widget name="config" position="20,20" size="595,50" scrollbarMode="showNever" itemHeight="50" />
                 <widget name="config2" position="20,100" size="595,320" scrollbarMode="showOnDemand" />
+                <!--
                 <ePixmap position="30,440" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" />
                 <widget name="key_green" position="60,430" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;19" foregroundColor="yellow" transparent="1" />
+                --->
             </screen>"""
 
     def __init__(self, session, plugin_path):
@@ -255,18 +263,17 @@ class PluginsPanel_config(Screen, ConfigListScreen):
         self.plugin_path = plugin_path
         self.skin_path = plugin_path
         self.session = session
-        self.list = []
+        # self.list = []
         self.onChangedEntry = []
         self['config2'] = mylist([])
-        ConfigListScreen.__init__(self, self.list)
-        # ConfigListScreen.__init__(self, self.list, session=self.session, on_change=self.changedEntry)        
-        self.list.append(getConfigListEntry('Sort by plugin hits:', config.plugins.PluginsPanel.hits))
-        self['config'].setList(self.list)
-        self['config'].l.setItemHeight(50)
-        self['key_green'] = Label('Sort')
+        # ConfigListScreen.__init__(self, self.list)
+        # self.list.append(getConfigListEntry('Sort by plugin hits:', config.plugins.PluginsPanel.hits))
+        # self['config'].setList(self.list)
+        # self['config'].setItemHeight(50)
+        # self['key_green'] = Label('Sort')
         self['setupActions'] = ActionMap(['SetupActions', 'ColorActions'], {
                                           'ok': self.change_hide,
-                                          'green': self.changeHits,
+                                          # 'green': self.changeHits,
                                           'cancel': self.saveConfig}, -1)
         self.readconfig()
 
@@ -274,16 +281,29 @@ class PluginsPanel_config(Screen, ConfigListScreen):
         # for x in self.onChangedEntry:
             # x()
 
-    def changeHits(self):
-        if config.plugins.PluginsPanel.hits.value == False:
-            config.plugins.PluginsPanel.hits.setValue(True)
-        else:
-            config.plugins.PluginsPanel.hits.setValue(False)
-            
-        config.plugins.PluginsPanel.hits.save()
-        self.readconfig()
+    # def getCurrentEntry(self):
+        # return self["config"].getCurrent()[0]
+
+    # def getCurrentValue(self):
+        # return str(self["config"].getCurrent()[1].getText())
+
+    # def createSummary(self):
+        # from Screens.Setup import SetupSummary
+        # return SetupSummary
+
+    # def changeHits(self):
+        # if config.plugins.PluginsPanel.hits.value == False:
+            # config.plugins.PluginsPanel.hits.setValue(True)
+        # else:
+            # config.plugins.PluginsPanel.hits.setValue(False)
+
+        # config.plugins.PluginsPanel.hits.save()
+        # self.readconfig()
 
     def readconfig(self):
+        # list = self.list
+        # del list[:]
+
         config_read = open(self.plugin_path + '/config', 'r')
         self.config_list = []
         for line in config_read.readlines():
@@ -294,25 +314,23 @@ class PluginsPanel_config(Screen, ConfigListScreen):
 
         config_read.close()
         self['config2'].l.setList(self.config_list)
-        
-        self.list.append(getConfigListEntry('Sort by plugin hits:', config.plugins.PluginsPanel.hits.value))        
-        self["config"].list = self.list
-        self["config"].l.setList(self.list)
-        
+        # self.list.append(getConfigListEntry('Sort by plugin hits:', config.plugins.PluginsPanel.hits.value))
+        # self["config"].list = self.list
+        # self["config"].l.setList(self.list)
 
     def show_menu(self, name, hits, hide):
         res = [(name, hits, hide)]
         if isFHD():
             if int(hide) == 0:
-                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 14), size=(20, 20), png=loadPNG(self.plugin_path + '/images/green.png')))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 14), size=(20, 20), png=loadPNG(self.plugin_path + '/images/greens.png')))
             else:
-                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 14), size=(20, 20), png=loadPNG(self.plugin_path + '/images/red.png')))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 14), size=(20, 20), png=loadPNG(self.plugin_path + '/images/reds.png')))
             res.append(MultiContentEntryText(pos=(50, 0), size=(450, 50), font=0, text=name, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER))
         else:
             if int(hide) == 0:
-                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 12), size=(20, 20), png=loadPNG(self.plugin_path + '/images/green.png')))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 12), size=(20, 20), png=loadPNG(self.plugin_path + '/images/greens.png')))
             else:
-                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 12), size=(20, 20), png=loadPNG(self.plugin_path + '/images/red.png')))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 12), size=(20, 20), png=loadPNG(self.plugin_path + '/images/reds.png')))
             res.append(MultiContentEntryText(pos=(50, 0), size=(450, 45), font=0, text=name, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER))
         return res
 
