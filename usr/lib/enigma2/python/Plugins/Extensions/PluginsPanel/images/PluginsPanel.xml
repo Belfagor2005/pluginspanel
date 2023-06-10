@@ -1,0 +1,4 @@
+<screen name="PluginsPanel" position="center,center" size="1200,720" title="">
+    <widget name="frame" position="10,80" size="184,89" pixmap="~/images/frame.png" zPosition="5" alphatest="on"/>
+    <widget name="info" position="0,2" size="1195,59" valign="center" halign="center" zPosition="10" font="Regular;32" foregroundColor="#007fcfff" transparent="1"/>
+    <widget name="disc" position="3,670" size="1273,47" valign="center" halign="center" zPosition="10" font="Regular;28" foregroundColor="yellow" transparent="1"/>' + skincontent + '</screen>
