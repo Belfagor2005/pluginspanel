@@ -85,6 +85,10 @@ class PluginsPanel(Screen):
 
         for plugin_data in self.list:
             plugin_start, plugin_name, plugin_desc, plugin_icon = plugin_data
+            
+            if 'PluginsPanel' in plugin_name:
+                continue
+            
             self.list_new.append((plugin_start,
                                   plugin_name[7],
                                   plugin_desc[7],
@@ -206,8 +210,18 @@ class PluginsPanel(Screen):
                 self.achsex -= 6
             else:
                 self.achsex -= 5
+            # if not self.achsex <= len(self.list) - int(self.bt):
+                # self.achsex -= int(self.bt)
+            # else:
+                # self.achsex = 0
         if self.achsex <= int(self.bt):
-            self.achsex = len(self.list) - 1
+            self.achsex -= self.achsex  #  len(self.list) - 1
+        else:
+            self.achsex = 0                
+                
+                
+        # if self.achsex <= int(self.bt):
+            # self.achsex = len(self.list) - 1
         print('[wall-e]: Position:', self.achsex)
         self.paintnew(self.posi[self.achsex][0], self.posi[self.achsex][1])
 
