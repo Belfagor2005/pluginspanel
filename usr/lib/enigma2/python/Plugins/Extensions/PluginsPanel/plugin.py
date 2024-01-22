@@ -24,6 +24,7 @@ import re
 import shutil
 from enigma import getDesktop
 
+from Components.Sources.List import List
 
 # this is old plugin i have adapted
 # and update to 2023-06-07  @Lululla @linux-sat forum
@@ -78,6 +79,7 @@ class PluginsPanel(Screen):
         self.skin_path = plugin_path
         self.session = session
         self.pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+        self.list = List([])
         self.list = [PluginEntryComponent(plugin) for plugin in self.pluginlist]
         self.list_new = []
 
@@ -85,10 +87,10 @@ class PluginsPanel(Screen):
 
         for plugin_data in self.list:
             plugin_start, plugin_name, plugin_desc, plugin_icon = plugin_data
-            
+
             if 'PluginsPanel' in plugin_name:
                 continue
-            
+
             self.list_new.append((plugin_start,
                                   plugin_name[7],
                                   plugin_desc[7],
@@ -98,6 +100,8 @@ class PluginsPanel(Screen):
             config_rds.write('"%s" "%s" "%s"\n' % (plugin_name[7], '0', '0'))
         config_rds.close()
         self.list = self.list_new
+
+        # self.list = List([])
 
         # if config.plugins.PluginsPanel.hits.value:
             # self.list.sort(key=lambda x: int(x[4]))
@@ -115,10 +119,10 @@ class PluginsPanel(Screen):
                     posx = 10
                     posy += 100
                 self.posi.append((posx, posy))
-                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(posx) + ',' + str(posy) + '" size="180,85" scale="stretch" alphatest="blend" />'
+                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(posx) + ',' + str(posy) + '" size="180,80" scale="1" alphatest="blend" />'
                 posx += 200
             self.skin = '<screen name="PluginsPanel" position="360,220" size="1200,767" title=""><widget name="frame" position="10,80" size="184,89" pixmap="~/images/framefhd.png" zPosition="5" alphatest="on" /><widget name="info" position="0,2" size="1195,59" valign="center" halign="center" zPosition="10" font="Regular;32" foregroundColor="#007fcfff" transparent="1" /><widget name="disc" position="3,670" size="1200,47" valign="center" halign="center" zPosition="10" font="Regular;28" foregroundColor="yellow" transparent="1" /><ePixmap position="6,725" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" /><widget name="key_green" position="35,715" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;24" foregroundColor="yellow" transparent="1" />' + skincontent + '</screen>'
-
+            print('self.skin fhd: ', self.skin)
         else:  # isHD()
             posx = 10
             posy = 30
@@ -127,21 +131,21 @@ class PluginsPanel(Screen):
                     posx = 10
                     posy += 60
                 self.posi.append((posx, posy))
-                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(posx) + ',' + str(posy) + '" size="100,40" alphatest="blend" />'
+                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(posx) + ',' + str(posy) + '" size="150,50" scale="1" alphatest="blend" />'
                 posx += 120
             self.skin = '<screen name="PluginsPanel" position="center,center" size="610,455" title=""><widget name="frame" position="10,10" size="107,50" pixmap="~/images/frame.png" zPosition="5" alphatest="on" /><widget name="info" position="0,2" size="610,24" valign="center" halign="center" zPosition="10" font="Regular;24" foregroundColor="#007fcfff" transparent="1" /><widget name="disc" position="0,378" size="610,20" valign="center" halign="center" zPosition="10" font="Regular;19" foregroundColor="yellow" transparent="1" />' + skincontent + '<ePixmap pixmap="~/images/green.png" position="10,410" size="20,20" zPosition="5" alphatest="blend" /><widget name="key_green" position="35,402" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;20" foregroundColor="yellow" transparent="1" /></screen>'
-
+            print('self.skin hd: ', self.skin)
         Screen.__init__(self, session)
         self['actions'] = ActionMap(['OkCancelActions',
                                      'ColorActions',
                                      'DirectionActions'], {'cancel': self.exit,
-                                                                'ok': self.ok,
-                                                                'green': self.wall_sort,
-                                                                'blue': self.wall_config,
-                                                                'left': self.left,
-                                                                'right': self.right,
-                                                                'up': self.up,
-                                                                'down': self.down}, -1)
+                                                           'ok': self.ok,
+                                                           'green': self.wall_sort,
+                                                           'blue': self.wall_config,
+                                                           'left': self.left,
+                                                           'right': self.right,
+                                                           'up': self.up,
+                                                           'down': self.down}, -1)
         self['frame'] = MovingPixmap()
         self['info'] = Label('')
         self['disc'] = Label('')
@@ -214,14 +218,14 @@ class PluginsPanel(Screen):
                 # self.achsex -= int(self.bt)
             # else:
                 # self.achsex = 0
-        if self.achsex <= int(self.bt):
-            self.achsex -= self.achsex  #  len(self.list) - 1
-        else:
-            self.achsex = 0                
-                
-                
         # if self.achsex <= int(self.bt):
             # self.achsex = len(self.list) - 1
+
+        if self.achsex <= int(self.bt):
+            self.achsex -= self.achsex  # len(self.list) - 1
+        else:
+            self.achsex = 0
+
         print('[wall-e]: Position:', self.achsex)
         self.paintnew(self.posi[self.achsex][0], self.posi[self.achsex][1])
 
@@ -265,7 +269,7 @@ class PluginsPanel_config(Screen, ConfigListScreen):
             <screen position="center,center" size="633,484" title="Wall Setup">
                 <widget name="config2" position="20,100" size="595,320" scrollbarMode="showOnDemand" />
                 <!--
-                <widget name="config" position="20,20" size="595,50" scrollbarMode="showNever" itemHeight="50" />                
+                <widget name="config" position="20,20" size="595,50" scrollbarMode="showNever" itemHeight="50" />
                 <ePixmap position="30,440" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" />
                 <widget name="key_green" position="60,430" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;19" foregroundColor="yellow" transparent="1" />
                 -->
