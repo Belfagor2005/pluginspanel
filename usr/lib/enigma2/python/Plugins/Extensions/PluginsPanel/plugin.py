@@ -14,17 +14,16 @@ from Components.PluginList import PluginEntryComponent
 from Components.ConfigList import ConfigListScreen
 from Components.config import config, getConfigListEntry
 from Components.config import ConfigEnableDisable, ConfigSubsection
+from Components.Sources.List import List
 from Screens.HelpMenu import HelpableScreen
 from Screens.Screen import Screen
 from enigma import eListboxPythonMultiContent, gFont
 from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER
 from enigma import loadPNG
+from enigma import getDesktop
 import os
 import re
 import shutil
-from enigma import getDesktop
-
-from Components.Sources.List import List
 
 # this is old plugin i have adapted
 # and update to 2023-06-07  @Lululla @linux-sat forum
@@ -44,6 +43,11 @@ def getDesktopSize():
 def isUHD():  # to future
     desktopSize = getDesktopSize()
     return desktopSize[0] == 3840
+
+
+def isWQHD():  # to future
+    desktopSize = getDesktopSize()
+    return desktopSize[0] == 2560
 
 
 def isFHD():
@@ -410,8 +414,6 @@ def Plugins(path, **kwargs):
     global plugin_path
     plugin_path = path
     icon = 'plugin.png'
-    # if isFHD():
-        # icon = 'pluginHD.png'
     list = []
     list.append(PluginDescriptor(icon='plugin.png', name='PluginsPanel', description='This Panel Show Plugins', where=PluginDescriptor.WHERE_MENU, fnc=menu))
     list.append(PluginDescriptor(icon='plugin.png', name='PluginsPanel', description='This Panel Show Plugins', where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main))
