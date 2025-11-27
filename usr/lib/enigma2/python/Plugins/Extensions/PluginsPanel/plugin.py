@@ -1,29 +1,60 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-from Components.ActionMap import ActionMap
-from Components.Label import Label
-from Components.MenuList import MenuList
-from Components.MultiContent import MultiContentEntryText
-from Components.MultiContent import MultiContentEntryPixmapAlphaTest
-from Components.Pixmap import Pixmap, MovingPixmap
-from Screens.Screen import Screen
-from Plugins.Plugin import PluginDescriptor
-from Components.PluginComponent import plugins
-from Components.PluginList import PluginEntryComponent
-from Components.ConfigList import ConfigListScreen
-from Components.config import config, getConfigListEntry
-from Components.config import ConfigEnableDisable, ConfigSubsection
-from Components.Sources.List import List
-from Screens.HelpMenu import HelpableScreen
-from Screens.Screen import Screen
-from enigma import eListboxPythonMultiContent, gFont
-from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER
-from enigma import loadPNG
-from enigma import getDesktop
+# ======================================
+# Python Standard Library
+# ======================================
 import os
 import re
 import shutil
+import gettext
+
+# ======================================
+# Enigma2 Core
+# ======================================
+from enigma import (
+    eListboxPythonMultiContent,
+    gFont,
+    RT_HALIGN_LEFT,
+    RT_VALIGN_CENTER,
+    loadPNG,
+    getDesktop,
+)
+
+# ======================================
+# Enigma2 Components
+# ======================================
+from Components.ActionMap import ActionMap
+from Components.Label import Label
+from Components.MenuList import MenuList
+from Components.MultiContent import (
+    MultiContentEntryText,
+    MultiContentEntryPixmapAlphaTest,
+)
+from Components.Pixmap import Pixmap, MovingPixmap
+from Components.PluginComponent import plugins
+from Components.PluginList import PluginEntryComponent
+from Components.ConfigList import ConfigListScreen
+from Components.config import (
+    config,
+    getConfigListEntry,
+    ConfigEnableDisable,
+    ConfigSubsection,
+)
+from Components.Sources.List import List
+
+# ======================================
+# Enigma2 Screens
+# ======================================
+from Screens.Screen import Screen
+from Screens.HelpMenu import HelpableScreen
+
+# ======================================
+# Plugin System
+# ======================================
+from Plugins.Plugin import PluginDescriptor
+
+_ = gettext.gettext
 
 # this is old plugin i have adapted
 # and update to 2023-06-07  @Lululla @linux-sat forum
@@ -106,7 +137,6 @@ class PluginsPanel(Screen):
         self.list = self.list_new
 
         # self.list = List([])
-
         # if config.plugins.PluginsPanel.hits.value:
             # self.list.sort(key=lambda x: int(x[4]))
             # self.list.reverse()
@@ -218,12 +248,6 @@ class PluginsPanel(Screen):
                 self.achsex -= 6
             else:
                 self.achsex -= 5
-            # if not self.achsex <= len(self.list) - int(self.bt):
-                # self.achsex -= int(self.bt)
-            # else:
-                # self.achsex = 0
-        # if self.achsex <= int(self.bt):
-            # self.achsex = len(self.list) - 1
 
         if self.achsex <= int(self.bt):
             self.achsex -= self.achsex  # len(self.list) - 1
@@ -298,29 +322,6 @@ class PluginsPanel_config(Screen, ConfigListScreen):
                                           # 'green': self.changeHits,
                                           'cancel': self.saveConfig}, -1)
         self.readconfig()
-
-    # def changedEntry(self):
-        # for x in self.onChangedEntry:
-            # x()
-
-    # def getCurrentEntry(self):
-        # return self["config"].getCurrent()[0]
-
-    # def getCurrentValue(self):
-        # return str(self["config"].getCurrent()[1].getText())
-
-    # def createSummary(self):
-        # from Screens.Setup import SetupSummary
-        # return SetupSummary
-
-    # def changeHits(self):
-        # if config.plugins.PluginsPanel.hits.value == False:
-            # config.plugins.PluginsPanel.hits.setValue(True)
-        # else:
-            # config.plugins.PluginsPanel.hits.setValue(False)
-
-        # config.plugins.PluginsPanel.hits.save()
-        # self.readconfig()
 
     def readconfig(self):
         # list = self.list
