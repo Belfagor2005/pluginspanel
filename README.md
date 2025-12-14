@@ -2,11 +2,18 @@ PluginsPanel Mod by Lululla
 
 ![](https://komarev.com/ghpvc/?username=Belfagor2005)
 
-<img src="https://github.com/Belfagor2005/pluginspanel/blob/main/usr/lib/enigma2/python/Plugins/Extensions/PluginsPanel/images/pluginHD.png">
+<!-- Icona plugin -->
+<p align="center">
+  <img src="https://github.com/Belfagor2005/pluginspanel/blob/main/usr/lib/enigma2/python/Plugins/Extensions/PluginsPanel/images/pluginHD.png" height="120">
+</p>
 
+## 📺 Screenshots
 
-<img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/1.jpg?raw=true">
-<img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/2.jpg?raw=true">
+<p align="center">
+  <img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/1.jpg?raw=true" height="220">
+  <img src="https://github.com/Belfagor2005/pluginspanel/blob/main/screenshot/2.jpg?raw=true" height="220">
+</p>
+
 
 Enigma2 project
 
@@ -22,3 +29,4 @@ Just settled it, give Caesar what is Caesar's
 ChangeLog
 v.1.0 : init plugin
 v.1.1: fixed Up/Down control / add Setup Sort
+
