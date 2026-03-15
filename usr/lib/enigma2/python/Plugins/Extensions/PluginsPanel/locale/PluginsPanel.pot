@@ -7,5 +7,6 @@
 
 
 
+
 msgid "Plugins Panel"
 msgstr ""
