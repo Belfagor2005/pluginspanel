@@ -53,7 +53,7 @@ from Screens.HelpMenu import HelpableScreen
 # Plugin System
 # ======================================
 from Plugins.Plugin import PluginDescriptor
-
+from . import __version__
 _ = gettext.gettext
 
 # this is old plugin i have adapted
@@ -61,7 +61,7 @@ _ = gettext.gettext
 # work on atv 7.2/4(dev) - BH Image HD & FHD
 # PY2/PY3 compatible
 
-version = 'v.1.1'
+version = 'v.' + __version__
 config.plugins.PluginsPanel = ConfigSubsection()
 config.plugins.PluginsPanel.hits = ConfigEnableDisable(default=False)
 
@@ -115,8 +115,7 @@ class PluginsPanel(Screen):
         self.session = session
         self.pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
         self.list = List([])
-        self.list = [PluginEntryComponent(plugin)
-                     for plugin in self.pluginlist]
+        self.list = [PluginEntryComponent(plugin) for plugin in self.pluginlist]
         self.list_new = []
 
         config_rds = open(self.plugin_path + '/config', 'w')
@@ -139,8 +138,8 @@ class PluginsPanel(Screen):
 
         # self.list = List([])
         # if config.plugins.PluginsPanel.hits.value:
-        # self.list.sort(key=lambda x: int(x[4]))
-        # self.list.reverse()
+            # self.list.sort(key=lambda x: int(x[4]))
+            # self.list.reverse()
         print('[wall-e]: Plugin count:', len(self.list))
 
         self.posi = []
@@ -154,8 +153,7 @@ class PluginsPanel(Screen):
                     posx = 10
                     posy += 100
                 self.posi.append((posx, posy))
-                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(
-                    posx) + ',' + str(posy) + '" size="180,80" scale="1" alphatest="blend" />'
+                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(posx) + ',' + str(posy) + '" size="180,80" scale="1" alphatest="blend" />'
                 posx += 200
             self.skin = '<screen name="PluginsPanel" position="360,220" size="1200,767" title=""><widget name="frame" position="10,80" size="184,89" pixmap="~/images/framefhd.png" zPosition="5" alphatest="on" /><widget name="info" position="0,2" size="1195,59" valign="center" halign="center" zPosition="10" font="Regular;32" foregroundColor="#007fcfff" transparent="1" /><widget name="disc" position="3,670" size="1200,47" valign="center" halign="center" zPosition="10" font="Regular;28" foregroundColor="yellow" transparent="1" /><ePixmap position="6,725" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" /><widget name="key_green" position="35,715" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;24" foregroundColor="yellow" transparent="1" />' + skincontent + '</screen>'
             print('self.skin fhd: ', self.skin)
@@ -167,11 +165,9 @@ class PluginsPanel(Screen):
                     posx = 10
                     posy += 60
                 self.posi.append((posx, posy))
-                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(
-                    posx) + ',' + str(posy) + '" size="150,50" scale="1" alphatest="blend" />'
+                skincontent += '<widget name="zeile' + str(x) + '" position="' + str(posx) + ',' + str(posy) + '" size="150,50" scale="1" alphatest="blend" />'
                 posx += 120
-            self.skin = '<screen name="PluginsPanel" position="center,center" size="610,455" title=""><widget name="frame" position="10,10" size="107,50" pixmap="~/images/frame.png" zPosition="5" alphatest="on" /><widget name="info" position="0,2" size="610,24" valign="center" halign="center" zPosition="10" font="Regular;24" foregroundColor="#007fcfff" transparent="1" /><widget name="disc" position="0,378" size="610,20" valign="center" halign="center" zPosition="10" font="Regular;19" foregroundColor="yellow" transparent="1" />' + \
-                skincontent + '<ePixmap pixmap="~/images/green.png" position="10,410" size="20,20" zPosition="5" alphatest="blend" /><widget name="key_green" position="35,402" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;20" foregroundColor="yellow" transparent="1" /></screen>'
+            self.skin = '<screen name="PluginsPanel" position="center,center" size="610,455" title=""><widget name="frame" position="10,10" size="107,50" pixmap="~/images/frame.png" zPosition="5" alphatest="on" /><widget name="info" position="0,2" size="610,24" valign="center" halign="center" zPosition="10" font="Regular;24" foregroundColor="#007fcfff" transparent="1" /><widget name="disc" position="0,378" size="610,20" valign="center" halign="center" zPosition="10" font="Regular;19" foregroundColor="yellow" transparent="1" />' + skincontent + '<ePixmap pixmap="~/images/green.png" position="10,410" size="20,20" zPosition="5" alphatest="blend" /><widget name="key_green" position="35,402" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;20" foregroundColor="yellow" transparent="1" /></screen>'
             print('self.skin hd: ', self.skin)
         Screen.__init__(self, session)
         self['actions'] = ActionMap(['OkCancelActions',
@@ -201,7 +197,7 @@ class PluginsPanel(Screen):
 
         self.achsex = 0
         # if config.plugins.PluginsPanel.hits.value:
-        # print('YEEES')
+            # print('YEEES')
         self.onFirstExecBegin.append(self._onFirstExecBegin)
 
     def wall_sort(self):
@@ -210,8 +206,7 @@ class PluginsPanel(Screen):
         self._onFirstExecBegin()
 
     def wall_config(self):
-        self.session.openWithCallback(
-            self.closen, PluginsPanel_config, plugin_path)
+        self.session.openWithCallback(self.closen, PluginsPanel_config, plugin_path)
 
     def closen(self, data):
         print('data: ', data)
@@ -285,8 +280,7 @@ class PluginsPanel(Screen):
         for x in range(len(self.list)):
             self['zeile' + str(x)].instance.setPixmap(self.list[x][3])
             self['zeile' + str(x)].show()
-        self.setTitle('Plugins Panel %s - Shows %s Plugins' %
-                      (version, len(self.list)))
+        self.setTitle('Plugins Panel %s - Shows %s Plugins' % (version, len(self.list)))
         self.paintnew(self.posi[self.achsex][0], self.posi[self.achsex][1])
 
     def ok(self):
@@ -324,9 +318,9 @@ class PluginsPanel_config(Screen, ConfigListScreen):
         # self['config'].setItemHeight(50)
         # self['key_green'] = Label('Sort')
         self['setupActions'] = ActionMap(['SetupActions', 'ColorActions'], {
-            'ok': self.change_hide,
-            # 'green': self.changeHits,
-            'cancel': self.saveConfig}, -1)
+                                          'ok': self.change_hide,
+                                          # 'green': self.changeHits,
+                                          'cancel': self.saveConfig}, -1)
         self.readconfig()
 
     def readconfig(self):
@@ -351,56 +345,16 @@ class PluginsPanel_config(Screen, ConfigListScreen):
         res = [(name, hits, hide)]
         if isFHD():
             if int(hide) == 0:
-                res.append(
-                    MultiContentEntryPixmapAlphaTest(
-                        pos=(
-                            15, 14), size=(
-                            20, 20), png=loadPNG(
-                            self.plugin_path + '/images/greens.png')))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 14), size=(20, 20), png=loadPNG(self.plugin_path + '/images/greens.png')))
             else:
-                res.append(
-                    MultiContentEntryPixmapAlphaTest(
-                        pos=(
-                            15, 14), size=(
-                            20, 20), png=loadPNG(
-                            self.plugin_path + '/images/reds.png')))
-            res.append(
-                MultiContentEntryText(
-                    pos=(
-                        50,
-                        0),
-                    size=(
-                        450,
-                        50),
-                    font=0,
-                    text=name,
-                    flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 14), size=(20, 20), png=loadPNG(self.plugin_path + '/images/reds.png')))
+            res.append(MultiContentEntryText(pos=(50, 0), size=(450, 50), font=0, text=name, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER))
         else:
             if int(hide) == 0:
-                res.append(
-                    MultiContentEntryPixmapAlphaTest(
-                        pos=(
-                            15, 12), size=(
-                            20, 20), png=loadPNG(
-                            self.plugin_path + '/images/greens.png')))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 12), size=(20, 20), png=loadPNG(self.plugin_path + '/images/greens.png')))
             else:
-                res.append(
-                    MultiContentEntryPixmapAlphaTest(
-                        pos=(
-                            15, 12), size=(
-                            20, 20), png=loadPNG(
-                            self.plugin_path + '/images/reds.png')))
-            res.append(
-                MultiContentEntryText(
-                    pos=(
-                        50,
-                        0),
-                    size=(
-                        450,
-                        45),
-                    font=0,
-                    text=name,
-                    flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER))
+                res.append(MultiContentEntryPixmapAlphaTest(pos=(15, 12), size=(20, 20), png=loadPNG(self.plugin_path + '/images/reds.png')))
+            res.append(MultiContentEntryText(pos=(50, 0), size=(450, 45), font=0, text=name, flags=RT_HALIGN_LEFT | RT_VALIGN_CENTER))
         return res
 
     def change_hide(self):
@@ -417,30 +371,20 @@ class PluginsPanel_config(Screen, ConfigListScreen):
                     name, hits, hide = ok[0]
                     if list_name.lower() == name.lower():
                         if int(hide) == 0:
-                            config_tmp.write(
-                                '"%s" "%s" "%s"\n' %
-                                (name, hits, '1'))
+                            config_tmp.write('"%s" "%s" "%s"\n' % (name, hits, '1'))
                         else:
-                            config_tmp.write(
-                                '"%s" "%s" "%s"\n' %
-                                (name, hits, '0'))
+                            config_tmp.write('"%s" "%s" "%s"\n' % (name, hits, '0'))
                     else:
-                        config_tmp.write(
-                            '"%s" "%s" "%s"\n' %
-                            (name, hits, hide))
+                        config_tmp.write('"%s" "%s" "%s"\n' % (name, hits, hide))
             config_tmp.close()
             config_read.close()
-            shutil.move(
-                self.plugin_path +
-                '/config_tmp',
-                self.plugin_path +
-                '/config')
+            shutil.move(self.plugin_path + '/config_tmp', self.plugin_path + '/config')
             self.readconfig()
 
     def saveConfig(self):
         print('save')
         # for x in self['config'].list:
-        # x[1].save()
+            # x[1].save()
 
         self.close('True')
 
@@ -472,18 +416,6 @@ def Plugins(path, **kwargs):
     plugin_path = path
     icon = 'plugin.png'
     list = []
-    list.append(
-        PluginDescriptor(
-            icon='plugin.png',
-            name='PluginsPanel',
-            description='This Panel Show Plugins',
-            where=PluginDescriptor.WHERE_MENU,
-            fnc=menu))
-    list.append(
-        PluginDescriptor(
-            icon='plugin.png',
-            name='PluginsPanel',
-            description='This Panel Show Plugins',
-            where=PluginDescriptor.WHERE_PLUGINMENU,
-            fnc=main))
+    list.append(PluginDescriptor(icon='plugin.png', name='PluginsPanel', description='This Panel Show Plugins', where=PluginDescriptor.WHERE_MENU, fnc=menu))
+    list.append(PluginDescriptor(icon='plugin.png', name='PluginsPanel', description='This Panel Show Plugins', where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main))
     return list
