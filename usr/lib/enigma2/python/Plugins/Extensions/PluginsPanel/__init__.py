@@ -25,7 +25,11 @@ def localeInit():
         lang = language.getLanguage()[:2]
         os.environ["LANGUAGE"] = lang
     if PluginLanguageDomain and PluginLanguagePath:
-        gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))
+        gettext.bindtextdomain(
+            PluginLanguageDomain,
+            resolveFilename(
+                SCOPE_PLUGINS,
+                PluginLanguagePath))
 
 
 if isDreambox:
@@ -37,7 +41,9 @@ else:
         if translated:
             return translated
         else:
-            print("[%s] fallback to default translation for %s" % (PluginLanguageDomain, txt))
+            print(
+                "[%s] fallback to default translation for %s" %
+                (PluginLanguageDomain, txt))
             return gettext.gettext(txt)
 
 localeInit()
