@@ -1,17 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-# ======================================
-# Python Standard Library
-# ======================================
-import os
 import re
 import shutil
 import gettext
-
-# ======================================
-# Enigma2 Core
-# ======================================
 from enigma import (
     eListboxPythonMultiContent,
     gFont,
@@ -20,10 +12,6 @@ from enigma import (
     loadPNG,
     getDesktop,
 )
-
-# ======================================
-# Enigma2 Components
-# ======================================
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from Components.MenuList import MenuList
@@ -37,22 +25,13 @@ from Components.PluginList import PluginEntryComponent
 from Components.ConfigList import ConfigListScreen
 from Components.config import (
     config,
-    getConfigListEntry,
     ConfigEnableDisable,
     ConfigSubsection,
 )
 from Components.Sources.List import List
-
-# ======================================
-# Enigma2 Screens
-# ======================================
 from Screens.Screen import Screen
-from Screens.HelpMenu import HelpableScreen
-
-# ======================================
-# Plugin System
-# ======================================
 from Plugins.Plugin import PluginDescriptor
+
 from . import __version__
 _ = gettext.gettext
 
@@ -157,9 +136,19 @@ class PluginsPanel(Screen):
                 skincontent += '<widget name="zeile' + str(x) + '" position="' + str(
                     posx) + ',' + str(posy) + '" size="180,80" scale="1" alphatest="blend" />'
                 posx += 200
-            self.skin = '<screen name="PluginsPanel" position="360,220" size="1200,767" title=""><widget name="frame" position="10,80" size="184,89" pixmap="~/images/framefhd.png" zPosition="5" alphatest="on" /><widget name="info" position="0,2" size="1195,59" valign="center" halign="center" zPosition="10" font="Regular;32" foregroundColor="#007fcfff" transparent="1" /><widget name="disc" position="3,670" size="1200,47" valign="center" halign="center" zPosition="10" font="Regular;28" foregroundColor="yellow" transparent="1" /><ePixmap position="6,725" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" /><widget name="key_green" position="35,715" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;24" foregroundColor="yellow" transparent="1" />' + skincontent + '</screen>'
-            print('self.skin fhd: ', self.skin)
-        else:  # isHD()
+            self.skin = (
+                '<screen name="PluginsPanel" position="360,220" size="1200,767" title="">'
+                '<widget name="frame" position="10,80" size="184,89" pixmap="~/images/framefhd.png" zPosition="5" alphatest="on" />'
+                '<widget name="info" position="0,2" size="1195,59" valign="center" halign="center" zPosition="10" font="Regular;32" foregroundColor="#007fcfff" transparent="1" />'
+                '<widget name="disc" position="3,670" size="1200,47" valign="center" halign="center" zPosition="10" font="Regular;28" foregroundColor="yellow" transparent="1" />'
+                '<ePixmap position="6,725" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" />'
+                '<widget name="key_green" position="35,715" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;24" foregroundColor="yellow" transparent="1" />'
+                + skincontent +
+                '</screen>'
+            )
+
+            print('self.skin fhd:', self.skin)
+        else:
             posx = 10
             posy = 30
             for x in range(len(self.list)):
@@ -470,7 +459,7 @@ def menu(menuid, **kwargs):
 def Plugins(path, **kwargs):
     global plugin_path
     plugin_path = path
-    icon = 'plugin.png'
+    # icon = 'plugin.png'
     list = []
     list.append(
         PluginDescriptor(
