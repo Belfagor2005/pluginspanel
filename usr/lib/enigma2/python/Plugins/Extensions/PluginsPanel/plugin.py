@@ -142,10 +142,9 @@ class PluginsPanel(Screen):
                 '<widget name="info" position="0,2" size="1195,59" valign="center" halign="center" zPosition="10" font="Regular;32" foregroundColor="#007fcfff" transparent="1" />'
                 '<widget name="disc" position="3,670" size="1200,47" valign="center" halign="center" zPosition="10" font="Regular;28" foregroundColor="yellow" transparent="1" />'
                 '<ePixmap position="6,725" size="20,20" pixmap="~/images/green.png" zPosition="5" alphatest="blend" />'
-                '<widget name="key_green" position="35,715" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;24" foregroundColor="yellow" transparent="1" />'
-                + skincontent +
-                '</screen>'
-            )
+                '<widget name="key_green" position="35,715" size="364,40" valign="center" halign="left" zPosition="10" font="Regular;24" foregroundColor="yellow" transparent="1" />' +
+                skincontent +
+                '</screen>')
 
             print('self.skin fhd:', self.skin)
         else:
